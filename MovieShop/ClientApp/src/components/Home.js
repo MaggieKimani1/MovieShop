@@ -7,7 +7,6 @@ export class Home extends Component {
     return (
       <div>
         <h1>Welcome to the Movie Shop</h1>
-        
       </div>
     );
   }
