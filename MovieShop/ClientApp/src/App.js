@@ -7,6 +7,8 @@ import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 
+
+
 import './custom.css'
 
 export default class App extends Component {
@@ -14,11 +16,14 @@ export default class App extends Component {
 
   render () {
     return (
-      <Layout>
-        <AuthorizeRoute exact path='/' component={Home} />
-        <AuthorizeRoute exact path='/form' component={Form} />
-        <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
-      </Layout>
+     
+     
+    <Layout>
+      <AuthorizeRoute exact path='/' component={Home} />
+      <AuthorizeRoute exact path='/form' component={Form} />
+      <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
+    </Layout>
+    //</div>
     );
   }
 }

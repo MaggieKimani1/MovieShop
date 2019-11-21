@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 
 import authService from './api-authorization/AuthorizeService';
 import Table from './Table';
-import Form from './Form';
 
 export class Home extends Component {    
     constructor(props) {
@@ -43,11 +44,14 @@ export class Home extends Component {
     //    this.setState({ characters: [...this.state.characters, character] })
     //}
 
-    
+
     render() {
         const { tableData } = this.state
         return (
             <div className="container">
+                <nav>
+                    <Link to="/form">Create New</Link>
+                </nav>
                 <h1>Welcome to the Movie Shop</h1>
                 <Table tableData={tableData} />
             </div>
