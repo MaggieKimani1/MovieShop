@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import authService from './api-authorization/AuthorizeService';
 import Table from './Table';
-//import Form from './Form';
+import Form from './Form';
 
 export class Home extends Component {    
     constructor(props) {
@@ -43,6 +43,7 @@ export class Home extends Component {
     //    this.setState({ characters: [...this.state.characters, character] })
     //}
 
+    
     render() {
         const { tableData } = this.state
         return (
