@@ -23,6 +23,7 @@ class Form extends Component {
         })
     }
 
+    
     submitForm = async (e) => {
         e.preventDefault();
         var token = await authService.getAccessToken();
@@ -36,6 +37,7 @@ class Form extends Component {
             releaseDate: this.state.releaseDate,
             price: parseInt(this.state.price)
         }
+    
         var data = JSON.stringify(newFilm);
         const response = await fetch('/Films', {
             method: 'POST',

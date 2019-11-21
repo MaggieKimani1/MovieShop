@@ -1,46 +1,50 @@
-﻿import React, { Component } from 'react'
+﻿import React, { Component } from 'react';
 
-const TableHeader = () => {
-    return (
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Genre</th>
-                <th>Release Date</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-    )
-}
 
-const TableBody = props => {
-    const rows = props.characterData.map((row, index) => {
-        return (
-            <tr key={index}>
-                <td>{row.name}</td>
-                <td>{row.job}</td>
-                <td>
-                    <button onClick={() => props.removeCharacter(index)}>Delete</button>
-                </td>
-            </tr>
-        )
-    })
-    return <tbody>{rows}</tbody>      
-        
+//const TableHeader = () => {
+    // () => props.removeCharacter(index)
+//    return <thead/>
+//}
 
-}
 
 class Table extends Component {
-    render() {
-        const { characterData, removeCharacter } = this.props
+    render () {
+        const { tableData } = this.props;
         return (
-            <table>
-                <TableHeader />
-                <TableBody characterData={characterData} removeCharacter={removeCharacter} />
-            </table>
-        )
-    }
-}
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                        <th> Title </th>
+                        <th> Genre </th>
+                        <th> ReleaseDate </th>
+                        <th> Price </th>
+                        </tr>
+                    </thead>
 
+                    {tableData.length > 0 && <tbody>{
+                        tableData.map((movie, index) => {
+                            return (
+                                <tr key={movie.id}>
+                                    <td>{movie.title}</td>
+                                    <td>{movie.genre}</td>
+                                    <td>{movie.releaseDate}</td>
+                                    <td>{movie.price}</td>
+                                    <td>
+                                        <button>Delete</button>
+                                    </td>
+                                </tr>
+                            )
+                        })
+                    }</tbody>}
+                    {tableData.length === 0 && <tbody><tr><td>Loading ...</td></tr></tbody>}
+                </table>
+            </div>
+            //<table>
+            //    <TableHeader />
+            //    <TableBody characterData={characterData} removeCharacter={removeCharacter} />
+            //</table>
+        );
+    } 
+}
 export default Table
