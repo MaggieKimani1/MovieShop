@@ -52,7 +52,10 @@ class Form extends Component {
         const resp = await response.json()
         console.log(resp);
 
+        const { updateDisplay } = this.props; 
+        updateDisplay();
     }
+
     render() {
         return (
             <form onSubmit={this.submitForm} >

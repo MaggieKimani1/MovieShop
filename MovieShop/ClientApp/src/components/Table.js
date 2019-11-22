@@ -14,9 +14,21 @@ class Table extends Component {
             tableData: []
         }
     }
-   /* componentDidMount = () => {
-        this.handleDelete();
-    };*/
+    
+    componentDidMount = () => {
+        this.populateTableData();
+    };
+
+    populateTableData = async () => {
+        const token = await authService.getAccessToken();
+        const response = await fetch("/Films",
+            {
+                headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+            });
+        const data = await response.json();
+        this.setState({ tableData: data }); //sets state value to the output from the api call
+}
+
     handleDelete = async (id) => {
         const token = await authService.getAccessToken();
         const response = await fetch('/Films/' + id,
@@ -31,8 +43,8 @@ class Table extends Component {
         const data = await response.json();
         console.log(data);
         if (data) {
-            const oldData = { ...this.state.tableData };
-            const newData = oldData.map(movie => movie.id !== id);
+            const { tableData } = this.state;
+            const newData = tableData.filter(movie => movie.id !== id);
             this.setState({ tableData: newData });
         }
        /* this.setState(
@@ -45,7 +57,7 @@ class Table extends Component {
 
 
     render () {
-        const { tableData } = this.props;
+        const { tableData } = this.state;
         return (
             <div>
                 <table>

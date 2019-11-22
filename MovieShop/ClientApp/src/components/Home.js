@@ -1,60 +1,39 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-
-
-import authService from './api-authorization/AuthorizeService';
 import Table from './Table';
+import Form from './Form';
 
 export class Home extends Component {    
     constructor(props) {
         super(props);
-        this.state = {
-            tableData: []
-        }
+        this.state = this.initialState;
+    }
 
+    initialState = {
+        displayForm : false
     }
     static displayName = Home.name;   
 
-    componentDidMount = () => {
-        this.populateTableData();
-    };
-
-    populateTableData = async () => {
-        const token = await authService.getAccessToken();
-        const response = await fetch("/Films",
-            {
-                headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-            });
-        const data = await response.json();
-        this.setState({ tableData: data }); //sets state value to the output from the api call
+    updateDisplayForm = () => {
+        this.setState({ displayForm: !this.state.displayForm });
     }
-
-    //delete
-
-    //removeCharacter = index => {
-    //    const { characters } = this.state
-    //    this.setState({
-    //        characters: characters.filter((character, i) => {
-    //            return i !== index
-    //        }),
-    //    })
-    //}
-
-    //handleSubmit = character => {
-    //    this.setState({ characters: [...this.state.characters, character] })
-    //}
-
-
+    
     render() {
-        const { tableData } = this.state
+        const { displayForm } = this.state;
+        if (displayForm) {
+            return (
+                <div className="container">
+                    <button onClick={this.updateDisplayForm}>  {'Show Form'}</button>
+                    <Form updateDisplay={this.updateDisplayForm}/>
+                </div>
+            );
+        }
         return (
             <div className="container">
-                <nav>
-                    <Link to="/form">Create New</Link>
-                </nav>
+                <button onClick={this.updateDisplayForm}>  {'Show Form'}</button>
                 <h1>Welcome to the Movie Shop</h1>
-                <Table tableData={tableData} />
+                <Table/>
             </div>
             );
     }
 }
+export default Home;
