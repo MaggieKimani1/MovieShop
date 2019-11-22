@@ -37,7 +37,18 @@ namespace MovieShop
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             services.AddAuthentication()
-                .AddIdentityServerJwt();
+                .AddIdentityServerJwt()
+                .AddMicrosoftAccount(microsoftOptions =>
+                {
+                    microsoftOptions.ClientId = Configuration["AuthenticationConfig:Microsoft:ClientId"];
+                    microsoftOptions.ClientSecret = Configuration["AuthenticationConfig:Microsoft:ClientSecret"];
+                    microsoftOptions.AuthorizationEndpoint = Configuration["AuthenticationConfig:Microsoft:Instance"] + Configuration["AuthenticationConfig:Microsoft:TenantId"] + "/oauth2/v2.0/authorize";
+                    microsoftOptions.TokenEndpoint = Configuration["AuthenticationConfig:Microsoft:Instance"] + Configuration["AuthenticationConfig:Microsoft:TenantId"] + "/oauth2/v2.0/token";
+                    microsoftOptions.Scope.Add("email");
+                    microsoftOptions.Scope.Add("profile");
+                    microsoftOptions.Scope.Add("openid");
+                });
+            
 
             services.AddControllersWithViews();
             services.AddRazorPages();
