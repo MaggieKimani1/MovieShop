@@ -46,6 +46,7 @@ class Table extends Component {
             const { tableData } = this.state;
             const newData = tableData.filter(movie => movie.id !== id);
             this.setState({ tableData: newData });
+            alert("Movie deleted successfully!");
         }
        /* this.setState(
             {

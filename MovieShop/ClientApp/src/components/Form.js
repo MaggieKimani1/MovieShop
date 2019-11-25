@@ -25,11 +25,13 @@ class Form extends Component {
 
     
     submitForm = async (e) => {
-        e.preventDefault();
-        var token = await authService.getAccessToken();
-        if (!token) {
-            token = '';
+        if (e.preventDefault()) {
+            var token = await authService.getAccessToken();
+            if (!token) {
+                token = '';
+            }
         }
+
         // extract form data
         const newFilm = {
             title: this.state.title,
@@ -37,25 +39,26 @@ class Form extends Component {
             releaseDate: this.state.releaseDate,
             price: parseInt(this.state.price)
         }
-    
+
         var data = JSON.stringify(newFilm);
         const response = await fetch('/Films', {
             method: 'POST',
             body: data,
             headers: {
-                 'Content-Type': 'application/json',
-                 'Authorization' : `Bearer ${token}` 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
-            
+
         });
 
         const resp = await response.json()
         console.log(resp);
 
-        const { updateDisplay } = this.props; 
+        const { updateDisplay } = this.props;
         updateDisplay();
-    }
+        alert("New Movie added!")
 
+    }
     render() {
         return (
             <form onSubmit={this.submitForm} >

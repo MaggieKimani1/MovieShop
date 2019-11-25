@@ -22,14 +22,14 @@ export class Home extends Component {
         if (displayForm) {
             return (
                 <div className="container">
-                    <button onClick={this.updateDisplayForm}>  {'Show Form'}</button>
+                    <button onClick={this.updateDisplayForm}>  {'Create New'}</button>
                     <Form updateDisplay={this.updateDisplayForm}/>
                 </div>
             );
         }
         return (
             <div className="container">
-                <button onClick={this.updateDisplayForm}>  {'Show Form'}</button>
+                <button onClick={this.updateDisplayForm}>  {'Create New'}</button>
                 <h1>Welcome to the Movie Shop</h1>
                 <Table/>
             </div>
