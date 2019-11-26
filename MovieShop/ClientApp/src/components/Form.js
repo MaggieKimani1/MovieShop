@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react'
 import authService from './api-authorization/AuthorizeService'
+import Button from './Button'
 
 class Form extends Component {
     constructor(props) {
@@ -25,11 +26,11 @@ class Form extends Component {
 
     
     submitForm = async (e) => {
-        if (e.preventDefault()) {
-            var token = await authService.getAccessToken();
-            if (!token) {
-                token = '';
-            }
+        e.preventDefault()
+
+        var token = await authService.getAccessToken();
+        if (!token) {
+            token = '';
         }
 
         // extract form data
@@ -82,7 +83,7 @@ class Form extends Component {
                     type="number"
                     name="price"
                     onChange={this.handleChange} />
-                <button>Submit</button>
+                <Button label="Submit"/>
             </form>
         );
     }

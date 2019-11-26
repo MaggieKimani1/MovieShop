@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Table from './Table';
 import Form from './Form';
+import Button from './Button';
+
 
 export class Home extends Component {    
     constructor(props) {
@@ -22,14 +24,14 @@ export class Home extends Component {
         if (displayForm) {
             return (
                 <div className="container">
-                    <button onClick={this.updateDisplayForm}>  {'Create New'}</button>
+                    <Button onClick={this.updateDisplayForm}  label="Create New"/>
                     <Form updateDisplay={this.updateDisplayForm}/>
                 </div>
             );
         }
         return (
             <div className="container">
-                <button onClick={this.updateDisplayForm}>  {'Create New'}</button>
+                <Button onClick={this.updateDisplayForm}  label="Create New"/>
                 <h1>Welcome to the Movie Shop</h1>
                 <Table/>
             </div>

@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import authService from './api-authorization/AuthorizeService';
+import Button from './Button';
 
 
 //const TableHeader = () => {
@@ -80,10 +81,10 @@ class Table extends Component {
                                     <td>{movie.releaseDate}</td>
                                     <td>{movie.price}</td>
                                     <td>
-                                        <button>Edit</button>
+                                        <Button label='Edit'/>
                                     </td>
                                     <td>                                        
-                                        <button onClick={(id) => this.handleDelete(movie.id)}>Delete</button>
+                                        <Button onClick={(id) => this.handleDelete(movie.id)} label ='Delete'/>
                                     </td>
                                 </tr>
                             )
