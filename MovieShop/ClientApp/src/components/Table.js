@@ -47,9 +47,8 @@ class Table extends Component {
             const { tableData } = this.state;
             const newData = tableData.filter(movie => movie.id !== id);
             this.setState({ tableData: newData });
+            alert("Movie deleted successfully!");
         }
-        alert("Movie deleted successfully!");
-
       
     }
     
@@ -77,14 +76,11 @@ class Table extends Component {
             })
         //const res = await response.json();
         console.log(data);
-        if (response) {            
-            alert("Movie edited successfully!");            
+        if (data) {
+            const { tableData } = this.state;
+            this.populateTableData();            
+            alert("Movie edited successfully!");
         }
-        const { tableData } = this.state;
-        this.setState({
-            clientIsEditing: false,
-            tableData
-        });
     }
        
         
