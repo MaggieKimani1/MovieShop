@@ -47,15 +47,48 @@ class Table extends Component {
             const { tableData } = this.state;
             const newData = tableData.filter(movie => movie.id !== id);
             this.setState({ tableData: newData });
-            alert("Movie deleted successfully!");
         }
-       /* this.setState(
-            {
-                tableData: this.state.tableData.filter((movie) => {
-                    return (movie.id !== id);
-                })
-            });*/
+        alert("Movie deleted successfully!");
+
+      
     }
+    
+    
+    editMovie = async (id, title, genre, releaseDate, price) => {
+        const token = await authService.getAccessToken();
+        const movie = {
+            id: id,
+            title: title,
+            genre: genre,
+            releaseDate: releaseDate,
+            price: parseInt(price)
+
+        }
+        var data = JSON.stringify(movie);
+        const response = await fetch('/Films/' + id,
+            {
+                headers: !token ? {} :
+                    {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                method: 'PUT',
+                body: data
+            })
+        //const res = await response.json();
+        console.log(data);
+        if (response) {            
+            alert("Movie edited successfully!");            
+        }
+        const { tableData } = this.state;
+        this.setState({
+            clientIsEditing: false,
+            tableData
+        });
+    }
+       
+        
+    
 
 
     render () {
@@ -71,17 +104,34 @@ class Table extends Component {
                         <th> Price </th>
                         </tr>
                     </thead>
-
-                    {tableData.length > 0 && <tbody>{
-                        tableData.map((movie, index) => {
+                    {tableData.length > 0 && <tbody>
+                        {this.state.tableData.map((movie, key) => {
+                            const editField = (value, index) => {
+                                const tableData = this.state.tableData.map(movie => ({ ...movie }))
+                                tableData[key][index] = value
+                                this.setState({ tableData })
+                            }
                             return (
-                                <tr key={movie.id}>
-                                    <td>{movie.title}</td>
-                                    <td>{movie.genre}</td>
-                                    <td>{movie.releaseDate}</td>
-                                    <td>{movie.price}</td>
-                                    <td>
-                                        <Button label='Edit'/>
+                                <tr key={key} className={movie.editing ? 'editing' : ''} onClick={() => {
+                                    const tableData = this.state.tableData.map(i => ({ ...i, editing: movie.editing && i === movie }))
+                                    tableData[key].editing = true;
+                                    this.setState({
+                                        clientIsEditing: true,
+                                        tableData
+                                    })
+                                        
+                                }}>
+                                    <td>{movie.editing ? <input value={tableData[key].title} onChange={e => editField(e.target.value, 'title')} /> :
+                                        <span>{movie.title}</span>}</td>
+                                    <td>{movie.editing ? <input value={tableData[key].genre} onChange={e => editField(e.target.value, 'genre')} /> :
+                                        <span>{movie.genre}</span>}</td>
+                                    <td>{movie.editing ? <input value={tableData[key].releaseDate} onChange={e => editField(e.target.value, 'releaseDate')} /> :
+                                        <span>{movie.releaseDate}</span>}</td>
+                                    <td>{movie.editing ? <input value={tableData[key].price} onChange={e => editField(e.target.value, 'price')} /> :
+                                        <span>{movie.price}</span>}</td>
+                                    <td>{movie.editing ?
+                                        <Button label='Update' onClick={(id, title, genre, releaseDate, price) => this.editMovie(movie.id, movie.title, movie.genre, movie.releaseDate, movie.price)} /> : <span>{}</span>
+                                        }
                                     </td>
                                     <td>                                        
                                         <Button onClick={(id) => this.handleDelete(movie.id)} label ='Delete'/>
@@ -93,10 +143,7 @@ class Table extends Component {
                     {tableData.length === 0 && <tbody><tr><td>Loading ...</td></tr></tbody>}
                 </table>
             </div>
-            //<table>
-            //    <TableHeader />
-            //    <TableBody characterData={characterData} removeCharacter={removeCharacter} />
-            //</table>
+           
         );
     } 
 }
