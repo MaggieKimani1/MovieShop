@@ -42,18 +42,19 @@ class Table extends Component {
                 method: 'DELETE'
             })
         const data = await response.json();
-        console.log(data);
         if (data) {
             const { tableData } = this.state;
             const newData = tableData.filter(movie => movie.id !== id);
-            this.setState({ tableData: newData });
+            this.setState({
+                tableData: newData,
+            });
             alert("Movie deleted successfully!");
         }
       
     }
     
     
-    editMovie = async (id, title, genre, releaseDate, price) => {
+    handleEdit = async (id, title, genre, releaseDate, price) => {
         const token = await authService.getAccessToken();
         const movie = {
             id: id,
@@ -64,7 +65,8 @@ class Table extends Component {
 
         }
         var data = JSON.stringify(movie);
-        const response = await fetch('/Films/' + id,
+        if (data) {
+            await fetch('/Films/' + id,
             {
                 headers: !token ? {} :
                     {
@@ -74,13 +76,9 @@ class Table extends Component {
                 method: 'PUT',
                 body: data
             })
-        //const res = await response.json();
-        console.log(data);
-        if (data) {
-            const { tableData } = this.state;
-            this.populateTableData();            
             alert("Movie edited successfully!");
         }
+        this.populateTableData();  
     }
        
         
@@ -126,7 +124,7 @@ class Table extends Component {
                                     <td>{movie.editing ? <input value={tableData[key].price} onChange={e => editField(e.target.value, 'price')} /> :
                                         <span>{movie.price}</span>}</td>
                                     <td>{movie.editing ?
-                                        <Button label='Update' onClick={(id, title, genre, releaseDate, price) => this.editMovie(movie.id, movie.title, movie.genre, movie.releaseDate, movie.price)} /> : <span>{}</span>
+                                        <Button label='Update' onClick={(id, title, genre, releaseDate, price) => this.handleEdit(movie.id, movie.title, movie.genre, movie.releaseDate, movie.price)} /> : <span>{}</span>
                                         }
                                     </td>
                                     <td>                                        
