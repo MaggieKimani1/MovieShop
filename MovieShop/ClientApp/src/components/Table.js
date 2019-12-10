@@ -48,7 +48,6 @@ class Table extends Component {
             this.setState({
                 tableData: newData,
             });
-            alert("Movie deleted successfully!");
         }
       
     }
@@ -76,7 +75,6 @@ class Table extends Component {
                 method: 'PUT',
                 body: data
             })
-            alert("Movie edited successfully!");
         }
         this.populateTableData();  
     }
